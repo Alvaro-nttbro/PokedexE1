@@ -1,2 +1,2 @@
 # PokedexE1
-Ejercicio 1 de crear una pokedex usando la Pokeapi en Angular
+Ejercicio 1, crear una pokedex usando la PokéApi en Angular
