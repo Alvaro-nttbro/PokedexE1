@@ -1,13 +1,8 @@
 export interface Pokemon {
+    id: number,
     name: string,
-    url: string
-}
-
-/*
-id: number,
-    name: string,
-    sprite: string,
-    type: string,
     height: number,
-    weight: number
-*/
+    weight: number,
+    sprites: {front_default: string},
+    types: {type: string},
+}

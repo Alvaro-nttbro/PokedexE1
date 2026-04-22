@@ -4,7 +4,7 @@ import { PokemonList } from './pokemon-list/pokemon-list';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, PokemonList],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

@@ -1,14 +1,14 @@
 import { Component, inject } from '@angular/core';
-import { Poke } from '../poke';
 import { PokemonService } from '../pokemon-service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { switchMap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-pokemon-details',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './pokemon-details.html',
   styleUrl: './pokemon-details.css',
 })

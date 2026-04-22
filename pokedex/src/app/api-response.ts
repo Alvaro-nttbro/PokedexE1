@@ -1,8 +1,8 @@
-import { Pokemon } from "./pokemon"
+import { Poke } from "./poke"
 
 export interface ApiResponse {
     count: number,
     next: string | null,
     previous: string | null,
-    results: Pokemon[]
+    results: Poke[]
 }

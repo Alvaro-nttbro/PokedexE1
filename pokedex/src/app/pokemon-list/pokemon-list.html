@@ -1,13 +1,17 @@
-<div>
-    @for(p of pokes; track $index){
-        <div>
-            <img src="{{p.sprites.front_default}}"/>
-            <span>{{p.id}} | </span>
-            <a [routerLink]="['/details', p.id]" routerLinkActive="router-link-active">{{p.name}}</a>
+<div class="list">
+    @for(p of pokemons(); track $index){
+        <div class="pokemon-card">
+            <div class="pokemon-info">
+                <img src="{{p.sprites.front_default}}"/>
+                <span>#{{p.id}}</span>
+                <span>{{p.name}}</span>
+                <a [routerLink]="['/details', p.id]" routerLinkActive="router-link-active">Details</a>
+            </div>
         </div>
     }
 </div>
-
-<button>Next</button>
-| {{page}} |
-<button>Prev</button>
+<div class="actions">
+    <button class="prev" (click)="prev()">Previous</button>
+    | {{page()}} |
+    <button class="next" (click)="next()">Next</button>
+</div>

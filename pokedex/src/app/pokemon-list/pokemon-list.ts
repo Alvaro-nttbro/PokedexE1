@@ -1,10 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, Signal, signal } from '@angular/core';
 import { PokemonService } from '../pokemon-service';
-import { Pokemon } from '../pokemon';
-import { Poke } from '../poke';
-import { map, pipe } from 'rxjs';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterModule } from '@angular/router';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { forkJoin, switchMap } from 'rxjs';
+import { Pokemon } from '../pokemon';
+
 
 @Component({
   selector: 'app-pokemon-list',
@@ -13,41 +13,47 @@ import { RouterModule } from '@angular/router';
   styleUrl: './pokemon-list.css',
 })
 export class PokemonList {
-  listHeight: number = 20;
-  limit: number = 50;
-  offset: number = 0;
-  page: number = 1;
-  pokemons: Pokemon[] = [];
-  pokes: Poke[] = [];
-  pokemonService = inject(PokemonService);
-  
-  ngOnInit(){
-    this.pokemonService.getAllPokemons(this.offset, this.limit).subscribe((data) => {
-      this.pokemons = data;
+  private pokemonService = inject(PokemonService);
 
-      this.pokemons.forEach((p, index) => {
-        this.pokemonService.getPokemonByUrl(p.url).subscribe(poke => {
-          this.pokes[index] = poke;
-        });
-      });
-    });
-    console.log(this.pokemons);
-    console.log(this.pokes);
-  }
+  limit = 20;
+  max = signal(0)
+  offset = signal(0);
+  page = signal(1);
+
+  offset$ = toObservable(this.offset);
+
+  pokemons = toSignal(
+    this.offset$.pipe(   // 👈 reacciona al offset
+      switchMap(offset =>
+        this.pokemonService.getAllPokemons(offset, this.limit)
+      ),
+      switchMap(pokes =>
+        forkJoin(
+          pokes.map(p =>
+            this.pokemonService.getPokemonByUrl(p.url)
+          )
+        )
+      )
+    ),
+    { initialValue: [] }
+  );
 
   prev(): void{
-    if(this.page > 1){
-      this.page--;
-      this.offset -= this.listHeight
-      this.limit -= this.listHeight;
+    if(this.page() > 1){
+      this.page.update(value => value - 1);
+      this.offset.update(value => value - this.limit);
+
+      console.log(this.page());
+      console.log(this.offset());
     }
   }
 
   next(): void{
-    if(this.page > 1){
-      this.page--;
-      this.offset -= this.listHeight
-      this.limit -= this.listHeight;
-    }
+      this.page.update(value => value + 1);
+      this.offset.update(value => value + this.limit);
+      
+      console.log(this.page());
+      console.log(this.offset());
+    
   }
 }

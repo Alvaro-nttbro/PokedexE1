@@ -10,20 +10,20 @@ import { Poke } from './poke';
 })
 export class PokemonService {
   httpClient = inject(HttpClient);
-  private apiUrl = 'https://pokeapi.co/api/v2/pokemon'
+  private apiUrl = 'https://pokeapi.co/api/v2/pokemon/'
 
-  getAllPokemons(offset: number, limit:number): Observable<Pokemon[]>{
+  getAllPokemons(offset: number, limit:number): Observable<Poke[]>{
     const pokemons = this.httpClient.get<ApiResponse>(this.apiUrl + `?limit=${limit}&offset=${offset}`).pipe(map(Response => Response.results));
     return pokemons;
   }
 
-  getPokemonById(id: number): Observable<Poke>{
-    const pokemon = this.httpClient.get<Poke>(this.apiUrl + id);
+  getPokemonById(id: number): Observable<Pokemon>{
+    const pokemon = this.httpClient.get<Pokemon>(this.apiUrl + id);
     return pokemon;
   }
 
-  getPokemonByUrl(url: string): Observable<Poke>{
-    const pokemon = this.httpClient.get<Poke>(url);
+  getPokemonByUrl(url: string): Observable<Pokemon>{
+    const pokemon = this.httpClient.get<Pokemon>(url);
     return pokemon;
   }
 }
