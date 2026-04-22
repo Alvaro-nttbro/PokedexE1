@@ -1,0 +1,12 @@
+<p>pokemon-details works!</p>
+<div *ngIf="pokemon() as pokemon">
+    <img src="{{pokemon().sprites.front_default}}"/>
+    {{pokemon().id}}
+    {{pokemon().name}}
+    {{pokemon().height}}
+    {{pokemon().weight}}
+    @for(t of pokemon().types; track $index){
+        {{t.type}}
+    }
+</div>
+
