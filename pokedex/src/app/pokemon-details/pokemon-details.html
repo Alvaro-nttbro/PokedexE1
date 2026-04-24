@@ -1,10 +1,30 @@
-<p>pokemon-details works!</p>
-<div *ngIf="pokemon() as pokemon">
+<button class="return" (click)="goBack()">
+    <span class="text">Return</span>
+</button>
+
+<div class="details" *ngIf="pokemon() as pokemon">
     <img src="{{pokemon.sprites.front_default}}"/>
-    {{pokemon.id}}
-    {{pokemon.name}}
-    {{pokemon.height}}
-    {{pokemon.weight}}
+    <div class="pokemon-details">
+        <label>
+            Number <span> {{pokemon.id}}</span>
+        </label>
+        <label>
+            Name <span> {{pokemon.name}}</span>
+        </label>
+        <label>
+            Height <span> {{pokemon.height}}</span>
+        </label>
+        <label>
+            Weight <span> {{pokemon.weight}}</span>
+        </label>
+        <label>
+            Types
+            <span>
+                @for(t of pokemon.types; track $index){
+                    {{t.type.name}}
+                }
+            </span>
+        </label>
+    </div>
 </div>
-<button (click)="goBack()">Return</button>
 

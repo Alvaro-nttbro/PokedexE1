@@ -3,8 +3,6 @@ import { PokemonService } from '../pokemon-service';
 import { RouterModule } from '@angular/router';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { forkJoin, switchMap } from 'rxjs';
-import { Pokemon } from '../pokemon';
-
 
 @Component({
   selector: 'app-pokemon-list',
@@ -15,7 +13,7 @@ import { Pokemon } from '../pokemon';
 export class PokemonList {
   private pokemonService = inject(PokemonService);
 
-  limit = 20;
+  limit = 21;
   max = signal(0)
   offset = signal(0);
   page = signal(1);
@@ -42,6 +40,7 @@ export class PokemonList {
     if(this.page() > 1){
       this.page.update(value => value - 1);
       this.offset.update(value => value - this.limit);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
 
       console.log(this.page());
       console.log(this.offset());
@@ -51,6 +50,7 @@ export class PokemonList {
   next(): void{
       this.page.update(value => value + 1);
       this.offset.update(value => value + this.limit);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       
       console.log(this.page());
       console.log(this.offset());

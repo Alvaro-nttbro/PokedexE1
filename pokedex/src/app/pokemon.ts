@@ -4,5 +4,5 @@ export interface Pokemon {
     height: number,
     weight: number,
     sprites: {front_default: string},
-    types: {type: string},
+    types: {type: {name: string}}[],
 }

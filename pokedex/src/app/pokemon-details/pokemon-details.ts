@@ -28,9 +28,6 @@ export class PokemonDetails {
   );
 
   goBack(): void {
-    this.location.back();
+    this.location.back();    
   }
-
-
-
 }
