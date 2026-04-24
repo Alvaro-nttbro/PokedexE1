@@ -21,7 +21,7 @@ export class PokemonList {
   offset$ = toObservable(this.offset);
 
   pokemons = toSignal(
-    this.offset$.pipe(   // 👈 reacciona al offset
+    this.offset$.pipe(
       switchMap(offset =>
         this.pokemonService.getAllPokemons(offset, this.limit)
       ),
@@ -48,12 +48,13 @@ export class PokemonList {
   }
 
   next(): void{
+    if(this.pokemons().length === this.limit){
       this.page.update(value => value + 1);
       this.offset.update(value => value + this.limit);
       window.scrollTo({ top: 0, behavior: 'smooth' });
       
       console.log(this.page());
       console.log(this.offset());
-    
+    }
   }
 }
